@@ -90,6 +90,7 @@ function App() {
                 </Routes>
               </div>
             </main>
+          </div>
         </div>
         
         <footer className="bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 py-4 z-10">
@@ -97,16 +98,14 @@ function App() {
             <p>TaskTango &copy; {new Date().getFullYear()} - Organize your tasks with style</p>
           </div>
         </footer>
-      </div>
       
       <ToastContainer
-
         autoClose={4000}
         hideProgressBar={false}
         autoClose={3000}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        theme={darkMode ? "dark" : "light"}
         draggable
         pauseOnHover
         draggable={true}
