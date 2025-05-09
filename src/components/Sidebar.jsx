@@ -42,7 +42,7 @@ const Sidebar = ({ darkMode, currentPath }) => {
       <button 
         onClick={toggleMobileMenu} 
         className="md:hidden fixed bottom-4 right-4 z-30 bg-primary text-white p-3 rounded-full shadow-lg"
-        aria-label="Toggle navigation menu"
+        className="md:hidden fixed bottom-4 right-4 z-40 bg-primary text-white p-3 rounded-full shadow-lg"
       >
         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -50,7 +50,7 @@ const Sidebar = ({ darkMode, currentPath }) => {
       {/* Mobile Sidebar */}
       <div className={`
         md:hidden fixed inset-0 bg-black bg-opacity-50 z-20 transition-opacity duration-300
-        ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+        md:hidden fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300
       `}>
         <div className={`
           fixed bottom-0 left-0 right-0 bg-white dark:bg-surface-800 rounded-t-xl shadow-lg
@@ -61,8 +61,8 @@ const Sidebar = ({ darkMode, currentPath }) => {
         </div>
       </div>
       
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:block w-64 bg-white dark:bg-surface-800 border-r border-surface-200 dark:border-surface-700 shrink-0">
+      {/* Desktop Sidebar - always visible on larger screens */}
+      <aside className="hidden md:block w-64 bg-white dark:bg-surface-800 border-r border-surface-200 dark:border-surface-700 shrink-0 overflow-y-auto">
         <div className="h-full p-4">
           <div className="space-y-1 sticky top-20">
             {renderNavLinks()}

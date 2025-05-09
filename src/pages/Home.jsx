@@ -1,119 +1,46 @@
-import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import MainFeature from '../components/MainFeature';
-import getIcon from '../utils/iconUtils';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { Plus, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 
 const Home = () => {
-  const [statistics, setStatistics] = useState({
-    total: 0,
-    completed: 0,
-    pending: 0
-  });
-  
-  const CheckCircle = getIcon('CheckCircle');
-  const Clock = getIcon('Clock');
-  const ListChecks = getIcon('ListChecks');
-  
-  // Update statistics when tasks change
-  const updateStatistics = (tasks) => {
-    const completed = tasks.filter(task => task.isCompleted).length;
-    setStatistics({
-      total: tasks.length,
-      completed,
-      pending: tasks.length - completed
-    });
-  };
+  const [tasks, setTasks] = useState([
+    { id: 1, title: 'Complete project proposal', status: 'completed', dueDate: '2023-10-15' },
+    { id: 2, title: 'Review team designs', status: 'in-progress', dueDate: '2023-10-20' },
+    { id: 3, title: 'Schedule client meeting', status: 'pending', dueDate: '2023-10-22' },
+    { id: 4, title: 'Update documentation', status: 'in-progress', dueDate: '2023-10-25' },
+  ]);
 
-  const handleTasksChange = (tasks) => {
-    updateStatistics(tasks);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  };
-
-  // Demo how to show a toast notification
-  useEffect(() => {
-    const hasShownWelcome = localStorage.getItem('hasShownWelcome');
-    
-    if (!hasShownWelcome) {
-      setTimeout(() => {
-        toast.info("Welcome to TaskTango! Add your first task to get started.", {
-          icon: "👋",
-          autoClose: 6000
-        });
-        localStorage.setItem('hasShownWelcome', 'true');
-      }, 1500);
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'completed': return <CheckCircle size={18} className="text-green-500" />;
+      case 'in-progress': return <Clock size={18} className="text-amber-500" />;
+      case 'pending': return <AlertCircle size={18} className="text-red-500" />;
+      default: return null;
     }
-  }, []);
+  };
 
   return (
-    <div className="space-y-8">
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="neu-card mb-8"
-      >
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Your Task Dashboard
-        </h2>
-        <p className="text-surface-600 dark:text-surface-300 mb-6">
-          Stay organized and boost your productivity with TaskTango's intuitive task management system.
-        </p>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <div className="card p-4 border-l-4 border-l-primary">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-primary/10 rounded-lg text-primary">
-                <ListChecks size={20} />
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <button className="btn btn-primary flex items-center gap-2">
+          <Plus size={18} /> Add Task
+        </button>
+      </div>
+
+      <div className="card p-6">
+        <h2 className="text-xl font-semibold mb-4">Recent Tasks</h2>
+        <div className="divide-y divide-surface-200 dark:divide-surface-700">
+          {tasks.map(task => (
+            <div key={task.id} className="py-3 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {getStatusIcon(task.status)}
+                <span className="font-medium">{task.title}</span>
               </div>
-              <div>
-                <p className="text-surface-500 dark:text-surface-400 text-sm">Total Tasks</p>
-                <p className="text-2xl font-bold">{statistics.total}</p>
-              </div>
+              <span className="text-sm text-surface-500">Due: {task.dueDate}</span>
             </div>
-          </div>
-          
-          <div className="card p-4 border-l-4 border-l-secondary">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-secondary/10 rounded-lg text-secondary">
-                <CheckCircle size={20} />
-              </div>
-              <div>
-                <p className="text-surface-500 dark:text-surface-400 text-sm">Completed</p>
-                <p className="text-2xl font-bold">{statistics.completed}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="card p-4 border-l-4 border-l-accent">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-accent/10 rounded-lg text-accent">
-                <Clock size={20} />
-              </div>
-              <div>
-                <p className="text-surface-500 dark:text-surface-400 text-sm">Pending</p>
-                <p className="text-2xl font-bold">{statistics.pending}</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
-
-        {statistics.total > 0 && (
-          <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-4 mb-2">
-            <div 
-              className="bg-gradient-to-r from-primary to-secondary h-4 rounded-full transition-all duration-500 ease-in-out"
-              style={{ width: `${(statistics.completed / statistics.total) * 100}%` }}
-            ></div>
-          </div>
-        )}
-        {statistics.total > 0 && (
-          <p className="text-sm text-surface-500 dark:text-surface-400 text-center">
-            {Math.round((statistics.completed / statistics.total) * 100)}% tasks completed
-          </p>
-        )}
-      </motion.section>
-
-      <MainFeature onTasksChange={handleTasksChange} />
+      </div>
     </div>
   );
 };
