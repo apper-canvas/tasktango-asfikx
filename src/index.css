@@ -31,6 +31,11 @@
   
   h4 {
     @apply text-lg md:text-xl;
+  
+  /* Better link styles for navigation */
+  a {
+    @apply transition-colors duration-200;
+  }
   }
 }
 
@@ -51,6 +56,15 @@
     @apply btn border-2 border-surface-300 dark:border-surface-700 hover:bg-surface-100 dark:hover:bg-surface-800;
   }
   
+  /* Enhanced sidebar active indicator */
+  .sidebar-active::before {
+    content: '';
+    @apply absolute left-0 top-1/2 -translate-y-1/2 w-1 h-3/4 bg-primary rounded-r;
+  }
+  .sidebar-active::after {
+    content: '';
+    @apply absolute right-4 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full;
+  }
   .input {
     @apply w-full px-4 py-2 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light;
   }
@@ -79,5 +93,19 @@
   
   .text-balance {
     text-wrap: balance;
+  }
+  
+  /* Better layout classes for dashboard */
+  .dashboard-layout {
+    @apply flex flex-col lg:flex-row gap-6;
+  }
+  
+  /* Custom padding and spacing utilities */
+  .p-responsive {
+    @apply p-3 sm:p-4 md:p-5 lg:p-6;
+  }
+  
+  .gap-responsive {
+    @apply gap-3 sm:gap-4 md:gap-5 lg:gap-6;
   }
 }
