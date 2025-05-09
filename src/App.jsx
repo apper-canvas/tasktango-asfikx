@@ -80,15 +80,16 @@ function App() {
             </header>
             
             <main className="flex-1 overflow-auto px-4 py-6 md:px-6 md:py-8">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/analytics" element={<Analytics />} />
-                <Route path="/settings" element={<Settings darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </div>
-          </main>
+              <div>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/analytics" element={<Analytics />} />
+                  <Route path="/settings" element={<Settings darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
+            </main>
         </div>
         
         <footer className="bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 py-4 z-10">
