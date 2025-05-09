@@ -12,13 +12,13 @@ import NotFound from './pages/NotFound';
 import Sidebar from './components/Sidebar';
 
 function App() {
+  const location = useLocation();
   const [darkMode, setDarkMode] = useState(() => {
     if (localStorage.getItem('darkMode') === 'true') return true;
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
   useEffect(() => {
-  const location = useLocation();
 
     if (darkMode) {
       document.documentElement.classList.add('dark');
@@ -26,7 +26,7 @@ function App() {
       document.documentElement.classList.remove('dark');
     }
     localStorage.setItem('darkMode', darkMode);
-  }, [darkMode]);
+  }, [darkMode, location]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
