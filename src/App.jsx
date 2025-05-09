@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col bg-surface-50 dark:bg-surface-900 overflow-hidden">
+      <div className="min-h-screen flex flex-col bg-surface-50 dark:bg-surface-900 overflow-hidden relative">
         <div className="flex flex-1">
           {/* Sidebar */}
           <Sidebar darkMode={darkMode} currentPath={location.pathname} />
@@ -97,20 +97,20 @@ function App() {
           <div className="max-w-7xl mx-auto px-4 text-center text-surface-500 dark:text-surface-400 text-sm">
             <p>TaskTango &copy; {new Date().getFullYear()} - Organize your tasks with style</p>
           </div>
-        </footer>
+        </footer>        
+        
+        <ToastContainer
+          autoClose={3000}
+          hideProgressBar={false}
+          closeOnClick
+          rtl={false}
+          theme={darkMode ? "dark" : "light"}
+          draggable
+          pauseOnHover
+          toastClassName="text-sm font-medium"
+        />
+      </div>
       
-      <ToastContainer
-        autoClose={4000}
-        hideProgressBar={false}
-        autoClose={3000}
-        closeOnClick
-        rtl={false}
-        theme={darkMode ? "dark" : "light"}
-        draggable
-        pauseOnHover
-        draggable={true}
-        toastClassName="text-sm font-medium"
-      />
     </>
   );
 }
