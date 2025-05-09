@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Pages
 import Home from './pages/Home';
+import Projects from './pages/Projects';
+import Analytics from './pages/Analytics';
+import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
+import Sidebar from './components/Sidebar';
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -14,6 +18,8 @@ function App() {
   });
 
   useEffect(() => {
+  const location = useLocation();
+
     if (darkMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -32,7 +38,7 @@ function App() {
         <header className="sticky top-0 z-10 bg-white dark:bg-surface-800 shadow-sm border-b border-surface-200 dark:border-surface-700">
           <div className="container mx-auto px-4 py-3 flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl select-none">
                 TT
               </div>
               <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
@@ -65,11 +71,20 @@ function App() {
           </div>
         </header>
         
-        <main className="container mx-auto px-4 py-6 flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+        <main className="flex-grow flex">
+          <Sidebar darkMode={darkMode} currentPath={location.pathname} />
+          
+          <div className="flex-1 overflow-auto p-4 md:p-6">
+            <div className="container mx-auto">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/settings" element={<Settings darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </div>
         </main>
         
         <footer className="bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 py-4">
